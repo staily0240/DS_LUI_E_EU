@@ -1,0 +1,271 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <windows.h>
+#include <string.h>
+#include <locale.h>
+#define TAM 2
+
+int i, voltar;
+
+typedef struct {
+        char fabricante[30];
+        char modelo[30];
+        int valor;
+        char placa[10];
+        int status;
+}Veiculo;
+
+Veiculo carros[TAM];
+
+void iniciarSistema(){
+		printf("Iniciando.\n");
+	    Sleep(1000);
+	    printf("Iniciando..\n");
+	    Sleep(1000);
+	    printf("Iniciando...");
+	    Sleep(1000);
+	    system("cls");
+}
+
+void cadastro(){
+    printf("\nCadastre o veículo da locadora:\n");
+    for(i = 0; i < TAM; i++){
+           printf("\nInforme o nome do fabricante:");
+           getchar();
+           fgets(carros[i].fabricante, 30, stdin);
+           printf("Informe o modelo do veículo:");
+           scanf("%s", &carros[i].modelo);
+           printf("Informe o valor do veículo:");
+           scanf("%d", &carros[i].valor);
+           printf("Informe a placa do veículo:");
+           scanf("%s", &carros[i].placa);
+           printf("Informe o status do veículo:\n1.DISPONÍVEL\n2.ALUGADO\n");
+           scanf("%d", &carros[i].status);
+           if(carros[i].status == 1){
+                printf(" ");
+           }else if(carros[i].status == 2){
+                printf(" ");
+           }else{
+                printf("Opção inválida. Digite um dos números informados");                         
+           }
+    }
+}
+     
+void imprimirCarros(){
+    for(i = 0; i < TAM; i++){
+    	 printf("\n");
+         printf("\nFabricante: %s", carros[i].fabricante);
+         printf("Modelo do veículo: %s", carros[i].modelo);
+         printf("\nValor do veículo: %d", carros[i].valor);
+         printf("\nPlaca: %s", carros[i].placa);
+         printf("\nStatus do veículo na locadora: ");
+         if(carros[i].status == 1){
+                printf("DISPONÍVEL");
+           }else if(carros[i].status == 2){
+                printf("ALUGADO");
+           }else{
+                printf("Opção inválida. Digite um dos números informados");                         
+           }
+    }
+}
+
+void carrosDisponiveis(){
+	printf("Imprimindo apenas os veículos dispiníveis");
+	for(i = 0; i < TAM; i++){
+		if(carros[i].status == 1){
+		printf("\nFabricante: %s", carros[i].fabricante);
+        printf("Modelo do veículo: %s", carros[i].modelo);
+        printf("\nValor do veículo: %d", carros[i].valor);
+        printf("\nPlaca: %s", carros[i].placa);
+        printf("\nStatus do veículo na locadora: DISPONÍVEL");
+    	}
+	}
+}
+
+void carrosAlugados(){
+	printf("Imprimindo apenas os veículos alugados");
+	for(i = 0; i < TAM; i++){
+		if(carros[i].status == 2){
+		printf("\nFabricante: %s", carros[i].fabricante);
+        printf("Modelo do veículo: %s", carros[i].modelo);
+        printf("\nValor do veículo: %d", carros[i].valor);
+        printf("\nPlaca: %s", carros[i].placa);
+        printf("\nStatus do veículo na locadora: ALUGADO");
+    	}
+	}
+}
+
+void buscarModelo(){
+	char nomeBuscar[30];
+	printf("Informe o modelo que deseja procurar:");
+	fflush(stdin);
+	fgets(nomeBuscar, 30, stdin);
+	int encontrado = 0;
+	for(i=1; i<TAM; i++){ 
+	    if(nomeBuscar== carros[i].modelo){
+	        printf("\nFabricante: %s", carros[i].fabricante);
+	         printf("Modelo do veículo: %s", carros[i].modelo);
+	         printf("\nValor do veículo: %d", carros[i].valor);
+	         printf("\nPlaca: %s", carros[i].placa);
+	         printf("\nStatus do veículo na locadora: ");
+	         if(carros[i].status == 1){
+	                printf("DISPONÍVEL");
+	           }else if(carros[i].status == 2){
+	                printf("ALUGADO");
+	           }else{
+	                printf("Opção inválida. Digite um dos números informados");                         
+	           }
+	    	encontrado = 1;
+	    }
+	    if(nomeBuscar != carros[i].modelo){
+	    	printf("\nNenhum modelo encontrado\n");
+	    	Sleep(1000);
+	    	system("cls");
+		}
+	}
+}
+
+void mediaValor(){
+	int soma = 0;
+    for(i = 0; i < TAM; i++){
+        soma += carros[i].valor;
+    }
+    int media = soma / TAM;
+    printf("Média de valor dos veículos da frota é: %d", media);
+}
+
+void Menu(){
+	int op;
+	do{
+		printf("------------Bem vindo ao sistema de carros da prova final------------");
+		printf("\nSelecione a operação que deseja realizar");
+		printf("\n1.Cadastrar veículo.");
+		printf("\n2.Listar veículos.");
+		printf("\n3.Listar veículos disponíveis.");
+		printf("\n4.Listar veículos alugados.");
+		printf("\n5.Buscar veículo por modelo.");
+		printf("\n6.Média de valor dos veículos.");
+		printf("\n0.Sair.\n");
+		scanf("%d", &op);
+		system("cls");
+		switch(op){
+			case 1:
+				cadastro();
+				printf("\nDigite 0 para realizar outra funçao ou qualquer outro número para encerrar o programa\n");
+                scanf("%d", &voltar);
+                system("cls");
+                if(voltar == 0){
+                    break;
+                }else{
+                	printf("Saindo.\n");
+	            	Sleep(1000);
+	            	printf("Saindo..\n");
+	            	Sleep(1000);
+	            	printf("Saindo...");
+	            	Sleep(500);
+                    exit(0);
+                }
+                
+            case 2:
+            	imprimirCarros();
+            	printf("\nDigite 0 para realizar outra funçao ou qualquer outro número para encerrar o programa\n");
+                scanf("%d", &voltar);
+                system("cls");
+                if(voltar == 0){
+                    break;
+                }else{
+                	printf("Saindo.\n");
+	            	Sleep(1000);
+	            	printf("Saindo..\n");
+	            	Sleep(1000);
+	            	printf("Saindo...");
+	            	Sleep(500);
+                    exit(0);
+                }
+                
+            case 3:
+            	carrosDisponiveis();
+            	printf("\nDigite 0 para realizar outra funçao ou qualquer outro número para encerrar o programa\n");
+                scanf("%d", &voltar);
+                system("cls");
+                if(voltar == 0){
+                    break;
+                }else{
+                	printf("Saindo.\n");
+	            	Sleep(1000);
+	            	printf("Saindo..\n");
+	            	Sleep(1000);
+	            	printf("Saindo...");
+	            	Sleep(500);
+                    exit(0);
+                }
+                
+            case 4:
+            	carrosAlugados();
+            	printf("\nDigite 0 para realizar outra funçao ou qualquer outro número para encerrar o programa\n");
+                scanf("%d", &voltar);
+                system("cls");
+                if(voltar == 0){
+                    break;
+                }else{
+                	printf("Saindo.\n");
+	            	Sleep(1000);
+	            	printf("Saindo..\n");
+	            	Sleep(1000);
+	            	printf("Saindo...");
+	            	Sleep(500);
+                    exit(0);
+                }
+                
+            case 5:
+            	buscarModelo();
+            	printf("\nDigite 0 para realizar outra funçao ou qualquer outro número para encerrar o programa\n");
+                scanf("%d", &voltar);
+                system("cls");
+                if(voltar == 0){
+                    break;
+                }else{
+                	printf("Saindo.\n");
+	            	Sleep(1000);
+	            	printf("Saindo..\n");
+	            	Sleep(1000);
+	            	printf("Saindo...");
+	            	Sleep(500);
+                    exit(0);
+                }
+            	
+            case 6:
+            	mediaValor();
+            	printf("\nDigite 0 para realizar outra funçao ou qualquer outro número para encerrar o programa\n");
+                scanf("%d", &voltar);
+                system("cls");
+                if(voltar == 0){
+                    break;
+                }else{
+                	printf("Saindo.\n");
+	            	Sleep(1000);
+	            	printf("Saindo..\n");
+	            	Sleep(1000);
+	            	printf("Saindo...");
+	            	Sleep(500);
+                    exit(0);
+                }
+                
+            case 0:
+            	printf("Saindo.\n");
+            	Sleep(1000);
+            	printf("Saindo..\n");
+            	Sleep(1000);
+            	printf("Saindo...");
+            	Sleep(500);
+		}
+	}while(op != 0);
+}
+
+int main(){
+	setlocale(LC_ALL, "Portuguese");
+	iniciarSistema();
+    Menu();
+
+  	return 0;
+}
